@@ -1,21 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@chakra-ui/react";
-import { InputGroup, Box, InputRightElement, Button } from "@chakra-ui/react"
-import { motion } from 'framer-motion'
-import { Text } from '@chakra-ui/react'
-import { Textarea } from "@chakra-ui/react"
-import { DeleteIcon } from '@chakra-ui/icons'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-import ReactMarkdown from 'react-markdown'
+import { InputGroup, Box, InputRightElement, Button } from "@chakra-ui/react";
+import { motion } from 'framer-motion';
+import { Text } from '@chakra-ui/react';
+import { Textarea } from "@chakra-ui/react";
+import { DeleteIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+import ReactMarkdown from 'react-markdown';
 import GeminiService from "../service/gemini.service";
 import useGemini from "../hooks/useGemini";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const ChatWithGemini = () => {
-
-    const { messages, loading, sendMessages, updateMessage } = useGemini()
+    const { messages, loading, sendMessages, updateMessage } = useGemini();
     const [input, setInput] = useState('');
+    const initialMessageSent = useRef(false);
 
     const AlwaysScrollToBottom = () => {
         const elementRef = useRef();
@@ -25,12 +25,24 @@ const ChatWithGemini = () => {
         return <div ref={elementRef} />;
     };
 
+    useEffect(() => {
+        if (!initialMessageSent.current && input.length>1) {
+            sendMessages({ message: "I am a computer science student. I want you to be my virtual adviser. Don't reply to any topic that is not related to computer science  even if i ask reply with i am not meant to respond to any other topic aside computer science field. Thank you, we can start now:", history: messages });
+            initialMessageSent.current = true;
+        }
+    }, [messages, sendMessages,input]);
+
     const handleSend = async () => {
-        if (!input) return
-        setInput('')
-        updateMessage([...messages, { "role": "user", "parts": [{ "text": input }] }])
-        sendMessages({ message: input, history: messages })
-    }
+        if (!input) return;
+        setInput('');
+        updateMessage([...messages, { "role": "user", "parts": [{ "text": input }] }]);
+        sendMessages({ message: input, history: messages });
+    };
+    const handleClear = async () => {
+        setInput('');
+        // updateMessage([...messages, { "role": "user", "parts": [{ "text": input }] }]);
+        sendMessages({ message: "I am a computer science student. I want you to be my virtual adviser. Don't reply to any topic that is not related to computer science  even if i ask reply with i am not meant to respond to any other topic aside computer science field. Thank you, we can start now:", history: messages });
+    };
 
     return (
         <>
@@ -58,8 +70,8 @@ const ChatWithGemini = () => {
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={e => {
                             if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault()
-                                handleSend()
+                                e.preventDefault();
+                                handleSend();
                             }
                         }}
                         variant={'unstyled'}
@@ -68,7 +80,7 @@ const ChatWithGemini = () => {
                         <Button colorScheme="whatsapp" h="1.75rem" size="sm" onClick={handleSend} rightIcon={<ArrowForwardIcon />}>
                             Send
                         </Button>
-                        <Button color={"white"} _hover={{ bg: "blue.500", }} variant={'outline'} h="1.75rem" size="sm" onClick={() => updateMessage([])} rightIcon={<DeleteIcon />}>
+                        <Button color={"white"} _hover={{ bg: "blue.500", }} variant={'outline'} h="1.75rem" size="sm" onClick={() => {updateMessage([]); handleClear()}} rightIcon={<DeleteIcon />}>
                             Clear
                         </Button>
                     </Box>
@@ -79,10 +91,9 @@ const ChatWithGemini = () => {
 };
 
 const Introduction = () => {
-
     const TextRenderer = (props) => {
         // eslint-disable-next-line react/prop-types
-        const { value = '', direction = 'r', size = 'large' } = props
+        const { value = '', direction = 'r', size = 'large' } = props;
         return <Text
             fontSize={size}
             bgGradient={`linear(to-${direction}, blue.100, cyan.700)`}
@@ -90,30 +101,28 @@ const Introduction = () => {
             fontWeight={'bold'}
         >
             {value}
-        </Text>
-    }
-
+        </Text>;
+    };
 
     return <Box className="flex flex-col items-center justify-center">
         <Box className="flex flex-col items-center justify-center">
-            <TextRenderer value="Welcome to Gemini AI" size="xxx-large" />
+            <TextRenderer value="Welcome to the Computer science advicing system" size="xxx-large" />
             <TextRenderer value="I'm Gemini, a chatbot that can help you with your queries" direction={'l'} />
         </Box>
         <Box className="flex flex-col items-center justify-center">
             <TextRenderer value="Type a message to get started" />
         </Box>
-    </Box>
-}
+    </Box>;
+};
 
 const RenderMessage = ({ message, msgIndex, loading, messageLength }) => {
-
-    const { parts, role } = message
+    const { parts, role } = message;
 
     const Loader = () => msgIndex === messageLength - 1 && loading && <Box className="flex self-start pt-2 ">
         <Box bgColor={'blue.500'} className="dot" />
         <Box bgColor={'blue.500'} className="dot" />
         <Box bgColor={'blue.500'} className="dot" />
-    </Box>
+    </Box>;
 
     return (
         parts.map((part, index) => part.text ?
@@ -143,8 +152,8 @@ const RenderMessage = ({ message, msgIndex, loading, messageLength }) => {
                 </Box>
                 <Loader />
             </> : <Loader key={index + part.text} />
-        ))
-
-}
+        )
+    );
+};
 
 export default ChatWithGemini;

@@ -1,11 +1,12 @@
 import { GoogleGenerativeAI, } from "@google/generative-ai";
-import { config } from "../utils/config";
+// import { config } from "../utils/config";
 
 const GeminiService = (function () {
 
     const MODEL_NAME = "gemini-pro";
-    const API_KEY = config.API_KEY;
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    // const API_KEY = config.API_KEY;
+    // const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI("AIzaSyDUm8CnAAC5Ndc5wHb2f1rrZdpnIJK6-8Q");
     const service = {};
 
     service.sendMessages = async function (message, prevChat) {
