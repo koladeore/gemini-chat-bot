@@ -25,13 +25,6 @@ const ChatWithGemini = () => {
         return <div ref={elementRef} />;
     };
 
-    useEffect(() => {
-        if (!initialMessageSent.current && input.length>1) {
-            sendMessages({ message: "I am a computer science student. I want you to be my virtual adviser. Don't reply to any topic that is not related to computer science  even if i ask reply with i am not meant to respond to any other topic aside computer science field. Thank you, we can start now:", history: messages });
-            initialMessageSent.current = true;
-        }
-    }, [messages, sendMessages,input]);
-
     const handleSend = async () => {
         if (!input) return;
         setInput('');
@@ -40,10 +33,9 @@ const ChatWithGemini = () => {
     };
     const handleClear = async () => {
         setInput('');
-        // updateMessage([...messages, { "role": "user", "parts": [{ "text": input }] }]);
-        sendMessages({ message: "I am a computer science student. I want you to be my virtual adviser. Don't reply to any topic that is not related to computer science  even if i ask reply with i am not meant to respond to any other topic aside computer science field. Thank you, we can start now:", history: messages });
+        updateMessage([]);
+        localStorage.removeItem('messages');
     };
-
     return (
         <>
             <Box className="w-[100%] self-center max-w-[1400px] m-4 overflow-auto rounded-md h-[80%] items-center">
@@ -54,7 +46,7 @@ const ChatWithGemini = () => {
                     <AlwaysScrollToBottom />
                 </Box>
             </Box>
-            <Box className="flex max-w-[1400px] px-10 pt-2 w-[100%] self-center">
+            <Box className="flex max-w-[1400px] px-10 pt-2 w-[100%] self-center mb-2">
                 <Box className="flex w-[100%] gap-2 justify-between items-center">
                     <Textarea
                         placeholder="Type a message"
@@ -106,8 +98,8 @@ const Introduction = () => {
 
     return <Box className="flex flex-col items-center justify-center">
         <Box className="flex flex-col items-center justify-center">
-            <TextRenderer value="Welcome to the Computer science advicing system" size="xxx-large" />
-            <TextRenderer value="I'm Gemini, a chatbot that can help you with your queries" direction={'l'} />
+            <TextRenderer value="Welcome to the Computer science advising system" size="xxx-large" />
+            <TextRenderer value="I'm a chatbot that can help you with your queries" direction={'l'} />
         </Box>
         <Box className="flex flex-col items-center justify-center">
             <TextRenderer value="Type a message to get started" />
