@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/gemini-bot-react/*"
+  to = "/gemini-bot-react/index.html"
+  status = 200
