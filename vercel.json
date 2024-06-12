@@ -1,1 +1,1 @@
-{ "rewrites": [{ "source": "/gemini-bot-react/(.*)", "destination": "/" }] }
+{ "rewrites": [{ "source": "/gemini-bot-react(.*)", "destination": "/" }] }
