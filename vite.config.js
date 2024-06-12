@@ -11,5 +11,9 @@ export default defineConfig({
   define: {
     global: 'window',
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
+  },
   base: '/gemini-bot-react/'
 })
