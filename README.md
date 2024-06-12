@@ -16,7 +16,7 @@ The chatbot has the following features:
  ## Screenshots
 
   ![Screenshot 2023-12-31 at 6 41 27 PM](https://github.com/SaiBarathR/gemini-bot-react/assets/58382813/fe6aa8e8-40bb-468a-bb21-2a8697c195ba)
-  ![Screenshot](https://github.com/koladeore/gemini-chat-bot/images/advisingSystem.png?raw=true)
+  ![Screenshot](images/advisingSystem.png)
 
 
 ## Dependencies
