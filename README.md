@@ -15,8 +15,8 @@ The chatbot has the following features:
 
  ## Screenshots
 
-  ![Screenshot](images/advisingSystem.png)
-  ![Screenshot](images/advisingSystem2.png)
+  ![Screenshot](https://github.com/koladeore/gemini-chat-bot/assets/38535951/10af8f72-a3cb-446a-b714-84951f877c32)
+  ![Screenshot](https://github.com/koladeore/gemini-chat-bot/assets/38535951/696c1415-40f5-4b12-b0b3-d780b918159a)
 
 
 ## Dependencies
